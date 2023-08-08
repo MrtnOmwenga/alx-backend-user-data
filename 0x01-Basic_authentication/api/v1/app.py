@@ -40,8 +40,8 @@ def not_found(error) -> str:
     return jsonify({"error": "Forbidden"}), 403
 
 
-@app_views.before_request
-def filter():
+@app.before_request
+def filter() -> None:
     """ Filter requests """
     if auth:
         excluded_paths = ['/api/v1/status/',
@@ -49,8 +49,7 @@ def filter():
                           '/api/v1/forbidden/'
                           ]
         if auth.require_auth(request.path, excluded_paths):
-            auth_header = auth.authorization_header(request)
-            if auth_header is None:
+            if auth.authorization_header(request) is None:
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
