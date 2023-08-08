@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """ Basic Authentication """
+from .auth import Auth
 
 
-class BasicAuth:
+class BasicAuth(Auth):
     """ Empty class for now """
