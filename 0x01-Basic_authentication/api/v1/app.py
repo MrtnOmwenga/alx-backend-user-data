@@ -41,7 +41,7 @@ def not_found(error) -> str:
 
 
 @app_views.before_request
-def filter() -> None:
+def filter():
     """ Filter requests """
     if auth:
         excluded_paths = ['/api/v1/status/',
@@ -49,7 +49,8 @@ def filter() -> None:
                           '/api/v1/forbidden/'
                           ]
         if auth.require_auth(request.path, excluded_paths):
-            if auth.authorization_header(request) is None:
+            auth_header = auth.authorization_header(request)
+            if auth_header is None:
                 abort(401)
             if auth.current_user(request) is None:
                 abort(403)
